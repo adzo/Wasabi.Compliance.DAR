@@ -4,10 +4,12 @@ Use the tool to update the Delete After Retention flag on any bucket that have c
 
 ## Prerequisite:
 
-- dotnet runtime
-- dotnet cli (for linux and Mac Osx)
+- [Dotnet](https://dotnet.microsoft.com/en-us/download)
 
 ## How to run?
+
+Under the _Publishes_ folder, you will find a DLL file and an executable (windows users only).
+You can either run the exe file, or the dll file via the dotnet cli using this command:
 
 ```
 dotnet Compliance.dll
