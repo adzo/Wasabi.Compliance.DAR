@@ -1,1 +1,1 @@
-Use this tool to update the delete after retention setting on your compliance enabled bucket!
+Use this tool to update the delete after retention setting on your compliance enabled bucket in Wasabi only!
