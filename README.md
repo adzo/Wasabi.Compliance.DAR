@@ -25,3 +25,7 @@ dotnet Compliance.dll
 > In case the bucket does not exist in your Wasabi account, a 404 error will be shown in the screen
 
 ![alt text](screenshots/Execution.png)
+
+# Want to improve it?
+
+Feel free to submit your pull-request!
