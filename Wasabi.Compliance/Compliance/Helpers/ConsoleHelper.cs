@@ -43,6 +43,14 @@ namespace Compliance
             };
         }
 
+        internal static bool AskCustomer(string v)
+        {
+            Console.Write(v);
+            var userInput = Console.ReadLine();
+
+            return (!string.IsNullOrEmpty(userInput) && (userInput.ToUpper().Trim().Equals("Y") || userInput.ToUpper().Trim().Equals("YES")));
+        }
+
         private string ReadParameter(string paramName, bool allowEmpty = false, string message = "")
         {
             var temp = "";
@@ -110,6 +118,46 @@ namespace Compliance
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("    "+message);
             Console.ResetColor();
+        }
+
+
+        internal class TableHelper
+        {
+            static int tableWidth = 73;
+
+            internal static void PrintLine()
+            {
+                Console.WriteLine(new string('-', tableWidth));
+            }
+
+            internal static void PrintRow(params string[] columns)
+            {
+                int width = (tableWidth - columns.Length) / columns.Length;
+                string row = "|";
+
+                foreach (string column in columns)
+                {
+                    row += AlignCentre(column, width) + "|";
+                }
+
+                Console.WriteLine(row);
+            }
+
+            internal static string AlignCentre(string text, int width)
+            {
+                text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;
+
+                if (string.IsNullOrEmpty(text))
+                {
+                    return new string(' ', width);
+                }
+                else
+                {
+                    return text.PadRight(width - (width - text.Length) / 2).PadLeft(width);
+                }
+            }
+
+
         }
     }
 }

@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Collections.Specialized;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 class S3AuthHandler : DelegatingHandler
 {

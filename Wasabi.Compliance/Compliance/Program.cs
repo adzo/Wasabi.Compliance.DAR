@@ -1,60 +1,36 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Compliance;
-using Compliance.Helpers;
+﻿using Compliance.Helpers;
+using Compliance.Services;
 
-start:
-Console.WriteLine("Welcome. Use this script to update the delete after retention on your bucket:");
-
-await RegionsHelpers.LoadRegionsAsync();  
-
-var consoleHelper = new ConsoleHelper();
-
-
-var configuration = consoleHelper.BuildS3Configuration();
-
-Console.WriteLine();
-try
+namespace Compliance
 {
-    //getting the compliance of the bucket: 
-    Console.WriteLine($"Reading the configuration of your bucket {configuration.BucketName} and ensuring compliance is enabled...");
-    Console.WriteLine();
-    var bucketConfiguration = await ComplianceHelper.LoadBucketConfigurationAsync(configuration);
-
-    if (bucketConfiguration.Status.Equals("disabled"))
+    public class Program
     {
-        Console.WriteLine("Compliance in this bucket is disabled!");
+        public static async Task Main()
+        {
+            PrintWelcomeMessage();
+            
+
+            await LoadRegionsAsync();
+            
+
+            await Task.Delay(50000);
+
+            ProgressHelper.EndProgress();
+        }
+
+        private static async Task LoadRegionsAsync()
+        {
+            ProgressHelper.ShowProgress("Downloading list of regions");
+
+            IRegionServices regionsService = new RegionService(); 
+            var regions = await regionsService.GetAllRegionsAsync();
+
+
+        }
+
+        private static void PrintWelcomeMessage()
+        {
+            Console.WriteLine("");
+        }
     }
-    else
-    {
-        //Console.WriteLine("Compliance in this bucket is enabled.");
-        if (bucketConfiguration.DeleteAfterRetention)
-        {
-            Console.WriteLine($"Disabling the delete after retention for your bucket {configuration.BucketName}...");
-            Console.WriteLine();
-            await ComplianceHelper.DisableDeleteAfterRetention(configuration);
-            Console.WriteLine($"  => Delete after retention was successfully disabled for you bucket {configuration.BucketName}");
-        }
-        else
-        {
-            Console.WriteLine($"Enabling the delete after retention for your bucket {configuration.BucketName}...");
-            Console.WriteLine();
-            await ComplianceHelper.EnableDeleteAfterRetention(configuration);
-            Console.WriteLine($"  => Delete after retention was successfully enabled for you bucket {configuration.BucketName}");
-        }
-    } 
-
-}
-catch (Exception ex)
-{
-    Console.WriteLine(ex.Message);
-}
-
-Console.WriteLine();
-Console.Write("Run the script again [Y/N]:");
-var userInput = Console.ReadLine(); 
-
-if(!string.IsNullOrEmpty(userInput) && (userInput.ToUpper().Trim().Equals("Y") || userInput.ToUpper().Trim().Equals("YES")))
-{
-    Console.Clear();
-    goto start;
 }
